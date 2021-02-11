@@ -92,6 +92,7 @@ func TestParseSystem(t *testing.T) {
 		fmt.Println("SpecValue", v.SpecValue())
 		fmt.Println("SpecType", v.SpecType())
 		fmt.Println("MountPoint=", v.MountPoint())
+		fmt.Println("FsType=", v.FsType())
 	}
 
 }

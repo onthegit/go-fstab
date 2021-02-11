@@ -220,6 +220,12 @@ func ParseLine(line string) (mount *Mount, err error) {
 	return
 }
 
+//MountPoint returns the mount point
 func (mount *Mount) MountPoint() string {
+	return mount.File
+}
+
+//FsType returns the file type of the mount
+func (mount *Mount) FsType() string {
 	return mount.File
 }
