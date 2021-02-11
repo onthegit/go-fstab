@@ -49,10 +49,11 @@ func ParseFile(filename string) (mounts Mounts, err error) {
 	file, err := os.Open(filename)
 	if nil != err {
 		return nil, err
-	} else {
-		defer file.Close()
-		return Parse(file)
 	}
+
+	defer file.Close()
+	return Parse(file)
+
 }
 
 func Parse(source io.Reader) (mounts Mounts, err error) {

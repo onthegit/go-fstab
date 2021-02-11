@@ -6,7 +6,7 @@ import (
 )
 
 var successfulParseLineExpectations map[string]Mount = map[string]Mount{
-	"/dev/sda / ext4 defaults 1 2": Mount{
+	"/dev/sda / ext4 defaults 1 2": {
 		"/dev/sda",
 		"/",
 		"ext4",
@@ -17,7 +17,7 @@ var successfulParseLineExpectations map[string]Mount = map[string]Mount{
 		2,
 	},
 
-	"UUID=homer / ext4 rw,uid=0": Mount{
+	"UUID=homer / ext4 rw,uid=0": {
 		"UUID=homer",
 		"/",
 		"ext4",
@@ -31,7 +31,7 @@ var successfulParseLineExpectations map[string]Mount = map[string]Mount{
 }
 
 var successfulMountStringExpectations map[string]Mount = map[string]Mount{
-	"/dev/sda / ext4 defaults 1 2": Mount{
+	"/dev/sda / ext4 defaults 1 2": {
 		"/dev/sda",
 		"/",
 		"ext4",
@@ -42,7 +42,7 @@ var successfulMountStringExpectations map[string]Mount = map[string]Mount{
 		2,
 	},
 
-	"UUID=homer / ext4 uid=0 0 0": Mount{
+	"UUID=homer / ext4 uid=0 0 0": {
 		"UUID=homer",
 		"/",
 		"ext4",
