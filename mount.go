@@ -46,7 +46,9 @@ func parseOptions(optionsString string) (options map[string]string) {
 		if len(bits) > 1 {
 			options[bits[0]] = bits[1]
 		} else {
-			options[bits[0]] = ""
+			if len(bits) > 0 {
+				options[bits[0]] = ""
+			}
 		}
 	}
 	return
@@ -138,34 +140,43 @@ func (mount *Mount) Equals(other *Mount) bool {
 // SpecType returns the device identifier type
 func (mount *Mount) SpecType() (spectype DeviceIdentifierType) {
 	bits := strings.Split(mount.Spec, "=")
-	switch strings.ToUpper(bits[0]) {
-	case "UUID":
-		spectype = UUID
+	if len(bits) > 0 {
+		switch strings.ToUpper(bits[0]) {
+		case "UUID":
+			spectype = UUID
 
-	case "LABEL":
-		spectype = Label
+		case "LABEL":
+			spectype = Label
 
-	case "PARTUUID":
-		spectype = PartUUID
+		case "PARTUUID":
+			spectype = PartUUID
 
-	case "PARTLABEL":
-		spectype = PartLabel
+		case "PARTLABEL":
+			spectype = PartLabel
 
-	default:
+		default:
+			spectype = Path
+		}
+	} else {
 		spectype = Path
 	}
+
 	return
 }
 
-// SpecType returns the device identifier value; that is if Spec is
+// SpecValue returns the device identifier value; that is if Spec is
 // "UUID=vogons-ate-my-sandwich", it will return "vogons-ate-my-sandwich"
 func (mount *Mount) SpecValue() string {
 	bits := strings.Split(mount.Spec, "=")
 	if 1 == len(bits) {
 		return mount.Spec
-	} else {
+	}
+
+	if len(bits) > 1 {
 		return bits[1]
 	}
+	return ""
+
 }
 
 // ParseLine parses a single line (of an fstab).
@@ -183,27 +194,26 @@ func ParseLine(line string) (mount *Mount, err error) {
 	fields := strings.Fields(line)
 	if len(fields) < 4 {
 		return nil, fmt.Errorf("too few fields (%d), at least 4 are expected", len(fields))
-	} else {
-		mount = new(Mount)
-		mount.Spec = fields[0]
-		mount.File = fields[1]
-		mount.VfsType = fields[2]
-		mount.MntOps = parseOptions(fields[3])
+	}
+	mount = new(Mount)
+	mount.Spec = fields[0]
+	mount.File = fields[1]
+	mount.VfsType = fields[2]
+	mount.MntOps = parseOptions(fields[3])
 
-		var convErr error
+	var convErr error
 
-		if len(fields) > 4 {
-			mount.Freq, convErr = strconv.Atoi(fields[4])
-			if nil != convErr {
-				return nil, fmt.Errorf("%s is not a number", fields[4])
-			}
+	if len(fields) > 4 {
+		mount.Freq, convErr = strconv.Atoi(fields[4])
+		if nil != convErr {
+			return nil, fmt.Errorf("%s is not a number", fields[4])
 		}
+	}
 
-		if len(fields) > 5 {
-			mount.PassNo, convErr = strconv.Atoi(fields[5])
-			if nil != convErr {
-				return nil, fmt.Errorf("%s it not a number", fields[5])
-			}
+	if len(fields) > 5 {
+		mount.PassNo, convErr = strconv.Atoi(fields[5])
+		if nil != convErr {
+			return nil, fmt.Errorf("%s it not a number", fields[5])
 		}
 	}
 

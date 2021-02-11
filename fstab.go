@@ -74,7 +74,7 @@ func Parse(source io.Reader) (mounts Mounts, err error) {
 		}
 	}
 
-	if err := scanner.Err(); err != nil {
+	if err = scanner.Err(); err != nil {
 		return nil, err
 	}
 
