@@ -219,3 +219,7 @@ func ParseLine(line string) (mount *Mount, err error) {
 
 	return
 }
+
+func (mount *Mount) MountPoint() string {
+	return mount.File
+}

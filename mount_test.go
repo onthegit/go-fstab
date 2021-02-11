@@ -1,6 +1,7 @@
 package fstab
 
 import (
+	"fmt"
 	"strings"
 	"testing"
 )
@@ -79,4 +80,18 @@ func TestMountString(t *testing.T) {
 			t.Errorf("Expected '%s', got '%s'", expectation, str)
 		}
 	}
+}
+
+func TestParseSystem(t *testing.T) {
+	m, err := ParseSystem()
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, v := range m {
+		fmt.Println("SpecValue", v.SpecValue())
+		fmt.Println("SpecType", v.SpecType())
+		fmt.Println("MountPoint=", v.MountPoint())
+	}
+
 }
