@@ -89,8 +89,8 @@ func TestParseSystem(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, v := range m {
-		// fmt.Println("SpecValue", v.SpecValue())
-		// fmt.Println("SpecType", v.SpecType())
+		fmt.Println("SpecValue", v.SpecValue())
+		fmt.Println("SpecType", v.SpecType())
 		fmt.Println("MountPoint=", v.MountPoint())
 		fmt.Println("FsType=", v.FsType())
 	}
