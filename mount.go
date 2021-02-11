@@ -227,5 +227,5 @@ func (mount *Mount) MountPoint() string {
 
 //FsType returns the file type of the mount
 func (mount *Mount) FsType() string {
-	return mount.File
+	return mount.VfsType
 }
